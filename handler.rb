@@ -26,8 +26,16 @@ class Handler
     end
   end
 
-  def tweet(text)
-    @crawler.tweet(text)
+  def tweet_profile_diff
+    pertition_time = 1.day.ago.strftime('%Y-%m-%d %H:%M:%S')
+    Profile.where("'#{pertition_time}' < created_at").each_slice(3) do |records|
+      text = "@tos\n"
+      records.each do |record|
+        text += "#{record.user_name}：#{record.profile}"[0..45] + "\n"
+      end
+      text.chomp!
+      @crawler.tweet(text)
+    end
   end
 
   at_exit do
