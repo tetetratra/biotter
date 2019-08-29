@@ -12,7 +12,12 @@ ActiveRecord::Base.establish_connection(
 Time.zone_default = Time.find_zone! 'Tokyo'
 ActiveRecord::Base.default_timezone = :local
 
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+class User < ActiveRecord::Base
+  has_many :profiles
+end
 
 class Profile < ActiveRecord::Base
-  self.primary_key = :id
+  belongs_to :user
 end

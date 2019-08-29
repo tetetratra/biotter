@@ -22,16 +22,22 @@ class Handler
       follower_profiles.uniq! # うーん
     end
     follower_profiles.each do |follower_profile|
-      Profile.create(follower_profile)
+      user = if User.where(user_name: follower_profile[:user_name]).empty?
+               User.create(user_name: follower_profile[:user_name])
+             else
+               User.where(user_name: follower_profile[:user_name]).first
+             end
+      if user.profiles.where(profile: follower_profile[:profile]).empty?
+        user.profiles.create(follower_profile)
+      end
     end
   end
 
   def tweet_profile_diff
-    pertition_time = 1.day.ago.strftime('%Y-%m-%d %H:%M:%S')
-    Profile.where("'#{pertition_time}' < created_at").each_slice(3) do |records|
+    Profile.where('? < created_at', 1.hour.ago).each_slice(3) do |records|
       text = "@tos\n"
       records.each do |record|
-        text += "#{record.user_name}：#{record.profile}"[0..45] + "\n"
+        text += "#{record.user_name}:#{record.profile.strip}"[0..45] + "\n"
       end
       text.chomp!
       @crawler.tweet(text)
