@@ -42,6 +42,7 @@ class Crawler
     encoded_text = URI.encode_www_form_component(text)
     @driver.navigate.to("https://twitter.com/intent/tweet?text=#{encoded_text}").tap { sleep 5 }
     at_css('input[type="submit"][value="ツイート"]').click.tap { sleep 5 }
+    page
   end
 
   private
