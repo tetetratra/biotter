@@ -7,6 +7,12 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'net/http'
 require 'uri'
+require 'optparse'
+
+$disp_chrome_flag = false
+opt = OptionParser.new
+opt.on('--disp_chrome') { $disp_chrome_flag = true }
+opt.parse(ARGV)
 
 require_relative './database.rb'
 require_relative './crawler.rb'
