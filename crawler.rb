@@ -3,10 +3,14 @@ class Crawler
   attr_accessor :user_name
 
   def initialize
-    ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
-    # caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ['--headless', '--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', "--user-agent=#{ua}", 'window-size=1280x800', '--incognito'] })
-    caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ["--user-agent=#{ua}", 'window-size=1280x800', '--incognito'] })
-    @driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
+    desired_capabilities =
+      if $disp_chrome_flag
+        Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ["--user-agent=#{user_agent}", 'window-size=1280x800', '--incognito'] })
+      else
+        Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ['--headless', '--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', "--user-agent=#{user_agent}", 'window-size=1280x800', '--incognito'] })
+      end
+    @driver = Selenium::WebDriver.for :chrome, desired_capabilities: desired_capabilities
     @driver.manage.timeouts.implicit_wait = 10 # find_elementのタイムアウト時間
     @user_name = ''
   end

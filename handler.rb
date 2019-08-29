@@ -35,7 +35,7 @@ class Handler
 
   def tweet_profile_diff
     Profile.where('? < created_at', 1.hour.ago).each_slice(3) do |records|
-      text = "@tos\n"
+      text = "@tos Bioが更新されました!\n"
       records.each do |record|
         text += "#{record.user_name}:#{record.profile.strip}"[0..45] + "\n"
       end
@@ -45,7 +45,6 @@ class Handler
   end
 
   at_exit do
-    puts 'プロセス終了'
     @crawler&.quit
   end
 end

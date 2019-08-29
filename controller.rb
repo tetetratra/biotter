@@ -10,7 +10,6 @@ class Controller < Sinatra::Base
 
   get '/:user_name' do
     @user = User.where(user_name: params['user_name']).first
-    binding.pry
     if @user
       erb :user_page
     else
@@ -19,9 +18,14 @@ class Controller < Sinatra::Base
     end
   end
 
-  # error do
-  #   'エラーが発生しました。 - ' + env['sinatra.error'].message
-  # end
+  not_found do
+    '無効なURLです...'
+  end
+
+  error do
+    # なんかログを残したい
+    'なにかエラーが発生しました...'
+  end
 
   run! if app_file == $PROGRAM_NAME # Rubyファイルが直接実行されたらサーバを立ち上げる
 end
