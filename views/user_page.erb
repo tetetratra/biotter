@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title><%= @user.user_name %>さんのプロフィール履歴</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <h1>Biotter</h1>
+    <form id="search_form" action="/" method="get">
+      <input id="user_name_input" type="text" placeholder="id入れてね">
+      <input id="search_button" type="submit" value="検索" onclick="button_click();">
+    </form>
+    <br>
+    <h2><%= @user.user_name %>
+      さんのプロフィール履歴</h2>
+    <br>
+    <table class="table">
+      <tr>
+        <th>更新日時</th>
+        <th>プロフィール</th>
+      </tr>
+      <% @user.profiles.sort_by{|p|p.created_at}.reverse.each do |profile| %>
+        <tr>
+          <td><%= profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= profile.profile %></td>
+        </tr>
+      <% end %>
+    </table>
+    <br>
+    <a href="/" role="button">ホームへ</a>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
