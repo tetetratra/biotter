@@ -1,9 +1,18 @@
+case `hostname -f`
+when /MacBook.*local/
+  db_username = 'root'
+  db_password = ''
+when /sakura\.ne\.jp/
+  db_username = 'biotter'
+  db_password = 'biotter_pass'
+end
+
 ActiveRecord::Base.establish_connection(
   adapter: 'mysql2',
-  database: 'twitter_bio_crawler',
+  database: 'biotter',
   host: 'localhost',
-  username: 'root',
-  password: '',
+  username: db_username,
+  password: db_password,
   charset: 'utf8mb4',
   encoding: 'utf8mb4',
   collation: 'utf8mb4_general_ci'
