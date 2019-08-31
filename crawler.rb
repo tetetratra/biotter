@@ -4,13 +4,37 @@ class Crawler
 
   def initialize
     user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
+=begin
     desired_capabilities =
       if $disp_chrome_flag
         Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ["--user-agent=#{user_agent}", 'window-size=1280x800', '--incognito'] })
       else
-        Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => { args: ['--headless', '--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', "--user-agent=#{user_agent}", 'window-size=1280x800', '--incognito'] })
+        Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {
+          args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-gpu',
+#            "--user-agent=#{user_agent}",
+#            'window-size=1280x800',
+#            '--incognito',
+#            'disable-infobars',
+#            '--disable-extensions',
+#            '--disable-dev-shm-usage'
+          ]
+        })
       end
     @driver = Selenium::WebDriver.for :chrome, desired_capabilities: desired_capabilities
+=end
+
+    options = Selenium::WebDriver::Chrome::Options.new
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('window-size=1280x800')
+    options.add_argument('--incognito')
+    @driver = Selenium::WebDriver.for :chrome, options: options
+
+
     @driver.manage.timeouts.implicit_wait = 10 # find_elementのタイムアウト時間
     @user_name = ''
   end
