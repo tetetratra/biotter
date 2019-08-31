@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <title><%= @user.user_name %>さんのプロフィール履歴</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script type="text/javascript">
+    function button_click() {
+          var form = document.getElementById("search_form");
+          var uesr_name = document.getElementById("user_name_input");
+          form.action = "/" + uesr_name.value;
+        }
+  form.submit();
+    </script>
   </head>
   <body>
     <h1>Biotter</h1>
