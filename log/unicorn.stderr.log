@@ -1,0 +1,42 @@
+I, [2019-08-31T00:08:16.747459 #32345]  INFO -- : Refreshing Gem list
+I, [2019-08-31T00:08:17.836688 #32345]  INFO -- : listening on addr=/home/kondodaichi/biotter/tmp/biotter.sock fd=10
+I, [2019-08-31T00:08:17.836913 #32345]  INFO -- : worker=0 spawning...
+I, [2019-08-31T00:08:17.838718 #32345]  INFO -- : master process ready
+I, [2019-08-31T00:08:17.844172 #32350]  INFO -- : worker=0 spawned pid=32350
+I, [2019-08-31T00:08:17.844378 #32350]  INFO -- : worker=0 ready
+bundler: failed to load command: unicorn (/home/kondodaichi/biotter/.bundle/ruby/2.5.0/bin/unicorn)
+ArgumentError: Already running on PID:32345 (or pid=/home/kondodaichi/biotter/tmp/pids/unicorn.pid is stale)
+  /home/kondodaichi/biotter/.bundle/ruby/2.5.0/gems/unicorn-5.5.1/lib/unicorn/http_server.rb:207:in `pid='
+  /home/kondodaichi/biotter/.bundle/ruby/2.5.0/gems/unicorn-5.5.1/lib/unicorn/http_server.rb:139:in `start'
+  /home/kondodaichi/biotter/.bundle/ruby/2.5.0/gems/unicorn-5.5.1/bin/unicorn:128:in `<top (required)>'
+  /home/kondodaichi/biotter/.bundle/ruby/2.5.0/bin/unicorn:23:in `load'
+  /home/kondodaichi/biotter/.bundle/ruby/2.5.0/bin/unicorn:23:in `<top (required)>'
+I, [2019-08-31T00:11:32.521476 #32345]  INFO -- : reaped #<Process::Status: pid 32350 exit 0> worker=0
+I, [2019-08-31T00:11:32.521754 #32345]  INFO -- : master complete
+I, [2019-08-31T00:11:40.403180 #32541]  INFO -- : Refreshing Gem list
+I, [2019-08-31T00:11:41.426269 #32541]  INFO -- : unlinking existing socket=/home/kondodaichi/biotter/tmp/biotter.sock
+I, [2019-08-31T00:11:41.426600 #32541]  INFO -- : listening on addr=/home/kondodaichi/biotter/tmp/biotter.sock fd=10
+I, [2019-08-31T00:11:41.426838 #32541]  INFO -- : worker=0 spawning...
+I, [2019-08-31T00:11:41.429358 #32541]  INFO -- : master process ready
+I, [2019-08-31T00:11:41.433676 #32546]  INFO -- : worker=0 spawned pid=32546
+I, [2019-08-31T00:11:41.433830 #32546]  INFO -- : worker=0 ready
+I, [2019-08-31T00:13:11.485155 #32541]  INFO -- : reaped #<Process::Status: pid 32546 exit 0> worker=0
+I, [2019-08-31T00:13:11.485427 #32541]  INFO -- : master complete
+I, [2019-08-31T00:13:13.991297 #32599]  INFO -- : Refreshing Gem list
+I, [2019-08-31T00:13:15.043719 #32599]  INFO -- : unlinking existing socket=/home/kondodaichi/biotter/tmp/biotter.sock
+I, [2019-08-31T00:13:15.043995 #32599]  INFO -- : listening on addr=/home/kondodaichi/biotter/tmp/biotter.sock fd=10
+I, [2019-08-31T00:13:15.044197 #32599]  INFO -- : worker=0 spawning...
+I, [2019-08-31T00:13:15.046045 #32599]  INFO -- : master process ready
+I, [2019-08-31T00:13:15.050979 #32604]  INFO -- : worker=0 spawned pid=32604
+I, [2019-08-31T00:13:15.051113 #32604]  INFO -- : worker=0 ready
+I, [2019-08-31T00:17:04.689423 #32599]  INFO -- : reaped #<Process::Status: pid 32604 exit 0> worker=0
+I, [2019-08-31T00:17:04.689859 #32599]  INFO -- : master complete
+I, [2019-08-31T00:17:34.092116 #32738]  INFO -- : Refreshing Gem list
+I, [2019-08-31T00:17:35.190159 #32738]  INFO -- : unlinking existing socket=/home/kondodaichi/biotter/tmp/biotter.sock
+I, [2019-08-31T00:17:35.190429 #32738]  INFO -- : listening on addr=/home/kondodaichi/biotter/tmp/biotter.sock fd=10
+I, [2019-08-31T00:17:35.190614 #32738]  INFO -- : worker=0 spawning...
+I, [2019-08-31T00:17:35.192691 #32738]  INFO -- : master process ready
+I, [2019-08-31T00:17:35.197467 #32743]  INFO -- : worker=0 spawned pid=32743
+I, [2019-08-31T00:17:35.197663 #32743]  INFO -- : worker=0 ready
+I, [2019-08-31T00:31:25.557746 #32738]  INFO -- : reaped #<Process::Status: pid 32743 exit 0> worker=0
+I, [2019-08-31T00:31:25.558000 #32738]  INFO -- : master complete

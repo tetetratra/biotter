@@ -1,4 +1,9 @@
 require_relative './common.rb'
+
+configure {
+  set :server, :puma
+}
+
 class Controller < Sinatra::Base
   def initialize
     super

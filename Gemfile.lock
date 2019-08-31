@@ -28,6 +28,7 @@ GEM
     multi_json (1.13.1)
     mustermann (1.0.3)
     mysql2 (0.5.2)
+    nio4r (2.5.1)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     pry (0.12.2)
@@ -36,6 +37,8 @@ GEM
     pry-byebug (3.7.0)
       byebug (~> 11.0)
       pry (~> 0.10)
+    puma (4.1.0)
+      nio4r (~> 2.0)
     rack (2.0.7)
     rack-protection (2.0.7)
       rack
@@ -85,6 +88,7 @@ DEPENDENCIES
   nokogiri
   pry
   pry-byebug
+  puma
   rspec
   selenium-webdriver
   sinatra
