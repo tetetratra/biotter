@@ -34,12 +34,9 @@ class Handler
   end
 
   def tweet_profile_diff
-    Profile.where('? < created_at', 1.hour.ago).each_slice(3).with_index(1) do |records, i|
-      text = "Bioが更新されました!(#{i})\n"
-      records.each do |record|
-        text += "#{record.user_name}: #{record.profile.strip}"[0..40] + "\n"
-      end
-      text.chomp!
+    Profile.where('? < created_at', 1.hour.ago).each_with_index do |record, i|
+      text = "Bioが更新されました!(#{i+1})\n"
+      text += "#{record.user_name}: #{record.profile.strip}"[0..120]
       @crawler.tweet(text)
     end
   end
