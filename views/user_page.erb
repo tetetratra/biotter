@@ -12,6 +12,11 @@
           form.submit();
         }
     </script>
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="http://tk2-223-21147.vs.sakura.ne.jp/<%= @user.user_name %>" />
+    <meta property="og:title" content="<%= @user.user_name %>さんのプロフィール履歴" />
+    <meta property="og:description" content="<%= h @user.profiles.last.profile %>" />
+    <meta property="og:image" content="http://tk2-223-21147.vs.sakura.ne.jp/image/<%= @user.user_name %>" />
   </head>
   <body>
     <h1>Biotter</h1>
