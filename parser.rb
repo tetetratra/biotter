@@ -15,14 +15,13 @@ class Parser
   def self.parse_follower_list_page(html)
     doc = Nokogiri::HTML.parse(html)
     follower_list = doc.css('div[aria-label="タイムライン: フォロワー"] > div > div > div > div[class] > div[tabindex]').map do |node|
-      split_text = node.text.split(/フォローされています|フォロー中|フォロー|未承認/).reject{|str| str.empty? }
+      split_text = node.text.split(/フォローされています|フォロー中|フォロー|未承認/).reject(&:empty?)
       user_name       = split_text[0].split('@')[-1]
-      name  = split_text[0].gsub(/@#{user_name}$/, '')
-      profile         = split_text.reject { |text| text.match?(/フォローされています|フォロー中|フォロー|未承認/) }[1..-1].join.gsub('@', '★')
-      followed        = false; # split_text.any? { |text| text.match?(/フォローされています/) }
-      following       = false; # split_text.any? { |text| text.match?(/フォロー中/) }
+      name            = split_text[0].gsub(/@#{user_name}$/, '')
+      profile         = split_text.reject { |text| text.match?(/フォローされています|フォロー中|フォロー|未承認/) }[1..-1]
+                                  .join.gsub('@', '★')
       icon_url        = node.at_css('img[src]')[:src]
-      { user_name: user_name, name: name, profile: profile, icon_url: icon_url, followed: followed, following: following }
+      { user_name: user_name, name: name, profile: profile, icon_url: icon_url }
     end
     follower_list
   end
