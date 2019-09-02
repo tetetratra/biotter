@@ -5,18 +5,18 @@
     <title><%= @user.user_name %>さんのプロフィール履歴</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript">
-    function button_click() {
-          var form = document.getElementById("search_form");
-          var uesr_name = document.getElementById("user_name_input");
-          form.action = "/" + uesr_name.value;
-          form.submit();
-        }
+      function button_click() {
+        var form = document.getElementById("search_form");
+        var uesr_name = document.getElementById("user_name_input");
+        form.action = "/" + uesr_name.value;
+        form.submit();
+      }
     </script>
-    <meta name="twitter:card" content="summary" />
-    <meta property="og:url" content="http://tk2-223-21147.vs.sakura.ne.jp/<%= @user.user_name %>" />
-    <meta property="og:title" content="<%= @user.user_name %>さんのプロフィール履歴" />
-    <meta property="og:description" content="<%= h @user.profiles.last.profile %>" />
-    <meta property="og:image" content="http://tk2-223-21147.vs.sakura.ne.jp/image/<%= @user.user_name %>" />
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:url" content="http://tk2-223-21147.vs.sakura.ne.jp/<%= @user.user_name %>"/>
+    <meta property="og:title" content="<%= @user.user_name %>さんのプロフィール履歴"/>
+    <meta property="og:description" content="<%= h @user.profiles.last.profile %>"/>
+    <meta property="og:image" content="http://tk2-223-21147.vs.sakura.ne.jp/biotter.png"/>
   </head>
   <body>
     <h1>Biotter</h1>
@@ -44,6 +44,9 @@
         </tr>
       <% end %>
     </table>
+    <br>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+    <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <br>
     <a href="/" role="button">ホームへ</a>
     <script src="http://code.jquery.com/jquery.js"></script>
