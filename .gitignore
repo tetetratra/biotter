@@ -1,4 +1,6 @@
 .bundle
 _*
 *.DS_Store
+pid
+state
 !.gitkeep
