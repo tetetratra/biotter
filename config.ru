@@ -1,3 +1,2 @@
-require "./controller"
+require './controller'
 run Controller
-
