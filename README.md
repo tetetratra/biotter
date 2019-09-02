@@ -2,6 +2,6 @@
 
 ツイッターのBioを収集します。
 
-Bot: <a href="https://twitter.com/_Biotter_">https://twitter.com/_Biotter_</a>
+<a href="https://twitter.com/_Biotter_">Botのリンク</a>
 
-Webページ: http://tk2-223-21147.vs.sakura.ne.jp
+<a href="http://tk2-223-21147.vs.sakura.ne.jp">Webページ</a>
