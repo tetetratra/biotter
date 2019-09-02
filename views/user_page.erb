@@ -9,8 +9,8 @@
           var form = document.getElementById("search_form");
           var uesr_name = document.getElementById("user_name_input");
           form.action = "/" + uesr_name.value;
+          form.submit();
         }
-  form.submit();
     </script>
   </head>
   <body>
@@ -25,13 +25,17 @@
     <br>
     <table class="table">
       <tr>
-        <th>更新日時</th>
+        <th>アイコン</th>
+        <th>名前</th>
         <th>プロフィール</th>
+        <th>更新日時</th>
       </tr>
       <% @user.profiles.sort_by{|p|p.created_at}.reverse.each do |profile| %>
         <tr>
+          <td><img src="<%= h profile.icon_url %>" alt="icon" width="30" height="30"></td>
+          <td><%= h profile.name %></td>
+          <td width="800"><%= h profile.profile %></td>
           <td><%= h profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
-          <td><%= h profile.profile %></td>
         </tr>
       <% end %>
     </table>
