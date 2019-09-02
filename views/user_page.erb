@@ -20,7 +20,7 @@
       <input id="search_button" type="submit" value="検索" onclick="button_click();">
     </form>
     <br>
-    <h2><%= @user.user_name %>
+    <h2><%= h @user.user_name %>
       さんのプロフィール履歴</h2>
     <br>
     <table class="table">
@@ -30,8 +30,8 @@
       </tr>
       <% @user.profiles.sort_by{|p|p.created_at}.reverse.each do |profile| %>
         <tr>
-          <td><%= profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
-          <td><%= profile.profile %></td>
+          <td><%= h profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= h profile.profile %></td>
         </tr>
       <% end %>
     </table>
