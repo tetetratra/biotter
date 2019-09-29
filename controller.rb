@@ -14,6 +14,7 @@ class Controller < Sinatra::Base
   end
 
   get '/biotter' do
+    @all_users = User.order(created_at: 'DESC').limit(20)
     erb :index
   end
 

@@ -8,7 +8,7 @@
       function button_click() {
         var form = document.getElementById("search_form");
         var uesr_name = document.getElementById("user_name_input");
-        form.action = "/" + uesr_name.value;
+        form.action = "/biotter/" + uesr_name.value;
         form.submit();
       }
     </script>
@@ -28,6 +28,26 @@
     </form>
     <br>
     <p><a href="https://twitter.com/_Biotter_">Bot</a> でプロフィールを集めています. フォローしてね〜<br>(フォローしてくれないとプロフィール集められません)</p>
+
+    <h2>最近の更新</h2>
+    <br>
+    <table class="table">
+      <tr>
+        <th>アイコン</th>
+        <th>名前</th>
+        <th>プロフィール</th>
+        <th>更新日時</th>
+      </tr>
+      <% @all_users.flat_map{|au| au.profiles }.each do |profile| %>
+        <tr>
+          <td><img src="<%= h profile.icon_url %>" alt="icon" width="30" height="30"></td>
+          <td width="100"><%= h profile.name %></td>
+          <td width="800"><%= h profile.profile %></td>
+          <td><%= h profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
+      <% end %>
+    </table>
+
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
     <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <br>
