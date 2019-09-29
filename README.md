@@ -4,4 +4,4 @@
 
 <a href="https://twitter.com/_Biotter_">Botのリンク</a>
 
-<a href="http://tk2-223-21147.vs.sakura.ne.jp">Webページ</a>
+<a href="http://tetetratra.net/biotter">Webページ</a>

@@ -8,7 +8,7 @@
       function button_click() {
         var form = document.getElementById("search_form");
         var uesr_name = document.getElementById("user_name_input");
-        form.action = "/" + uesr_name.value;
+        form.action = "/biotter/" + uesr_name.value;
         form.submit();
       }
     </script>
@@ -22,7 +22,7 @@
     <br>
     <%= @not_found_user_name %>さんはいません...
     <br>
-    <a href="/" role="button">ホームへ...</a>
+    <a href="/biotter" role="button">ホームへ...</a>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
