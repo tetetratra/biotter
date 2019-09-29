@@ -13,11 +13,11 @@ class Controller < Sinatra::Base
     end
   end
 
-  get '/' do
+  get '/biotter' do
     erb :index
   end
 
-  get '/:user_name' do
+  get '/biotter/:user_name' do
     @user = User.where(user_name: params['user_name']).first
     if @user
       erb :user_page
