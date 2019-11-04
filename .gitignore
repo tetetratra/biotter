@@ -3,4 +3,6 @@ _*
 *.DS_Store
 pid
 state
-!.gitkeep
+tmp/*
+!.gitkeepA
+cacert.pem
