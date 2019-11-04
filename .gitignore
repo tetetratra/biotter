@@ -6,3 +6,5 @@ state
 tmp/*
 !.gitkeepA
 cacert.pem
+public/images/*
+!public/images/.gitkeep
