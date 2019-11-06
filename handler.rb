@@ -75,10 +75,10 @@ class Handler
 
   def tweet_follower_profiles(follower_profiles)
     follower_profiles.each do |follower_profile|
-      safe_description = follower_profile[:user_description].gsub(/@|#/, '*')
+      safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
       tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}"[0..115] \
-                  + "\nhttp://tetetratra.net/biotter/#{follower_profile[:user_screen_name]}"
-      # @client.update(tweet_str)
+        + "\nhttp://biotter.tetetratra.net/#{follower_profile[:user_screen_name]}"
+      @client.update(tweet_str)
     end
   end
 end
