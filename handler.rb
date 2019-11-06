@@ -46,8 +46,9 @@ class Handler
     # "違い"とみなす項目
     compare_target_colmn = %i[user_description user_screen_name user_name]
     selected_follower_profiles = follower_profiles.select do |follower_profile|
+      binding.pry
       user = User.where(user_twitter_id: follower_profile[:user_twitter_id]).last
-      user.nil? || user.profiles.first&.slice(*compare_target_colmn)&.symbolize_keys != follower_profile.slice(*compare_target_colmn)
+      user.nil? || user.profiles.last&.slice(*compare_target_colmn)&.symbolize_keys != follower_profile.slice(*compare_target_colmn)
     end
     selected_follower_profiles
   end
