@@ -13,14 +13,16 @@ class Controller < Sinatra::Base
     end
   end
 
-  get '/biotter' do
-    @all_profiles = Profile.all.order(created_at: 'DESC').limit(10)
+  get '/' do
+    @all_profiles = Profile.all.order(created_at: 'DESC')
     erb :index
   end
 
-  get '/biotter/:user_name' do
-    @user = User.where(user_name: params['user_name']).first
-    if @user
+  get '/:user_name' do
+    profile = Profile.where(user_screen_name: params['user_name']).first
+    if profile
+      # screen_idを変更してもOKなようにしている
+      @profiles = profile.user.profiles
       erb :user_page
     else
       @not_found_user_name = params['user_name']

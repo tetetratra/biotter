@@ -15,7 +15,7 @@ class Handler
       user_twitter_id        = follower[:id]
       user_screen_name       = follower[:screen_name]
       user_name              = follower[:name]
-      user_profile_image_url = follower[:profile_image_url].gsub('_normal', '_200x200')
+      user_profile_image_url = follower[:profile_image_url].gsub('_normal', '_200x200').split('/')[-2..-1].join('_')
       user_description       = follower[:description]
                                .then do |description|
                                  url_master.inject(description) do |new_description, (short_url, full_url)|
@@ -41,6 +41,7 @@ class Handler
   end
 
   def select_updated_follower_profiles(follower_profiles)
+    # "違い"とみなす項目
     compare_target_colmn = %i[user_description user_screen_name user_name user_profile_image_url]
     selected_follower_profiles = follower_profiles.select do |follower_profile|
       user = User.find_by(user_twitter_id: follower_profile[:user_twitter_id])
@@ -53,9 +54,8 @@ class Handler
     follower_profiles.each do |follower_profile|
       user = User.find_by(user_twitter_id: follower_profile[:user_twitter_id]) || User.create(user_twitter_id: follower_profile[:user_twitter_id])
       user.profiles.create(follower_profile)
-      user_profile_image_name = follower_profile[:user_profile_image_url].split('/')[-2..-1].join('_')
       Dir.mkdir("public/images/#{follower_profile[:user_twitter_id]}") if Dir.glob("public/images/#{follower_profile[:user_twitter_id]}").empty?
-      File.open("public/images/#{follower_profile[:user_twitter_id]}/#{user_profile_image_name}", 'wb') do |file|
+      File.open("public/images/#{follower_profile[:user_twitter_id]}/#{follower_profile[:user_profile_image_url]}", 'wb') do |file|
         uri = URI.parse(follower_profile[:user_profile_image_url])
         request = Net::HTTP::Get.new(uri)
         request['Upgrade-Insecure-Requests'] = '1'
@@ -73,8 +73,9 @@ class Handler
 
   def tweet_follower_profiles(follower_profiles)
     follower_profiles.each do |follower_profile|
-      safe_description = follower_profile[:user_description].gsub(/@/, '*')
-      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}\nhttp://tetetratra.net/biotter/#{follower_profile[:user_screen_name]}"
+      safe_description = follower_profile[:user_description].gsub(/@|#/, '*')
+      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}"\
+                  + "\nhttp://tetetratra.net/biotter/#{follower_profile[:user_screen_name]}"
       puts tweet_str
       # @client.update(tweet_str)
     end
