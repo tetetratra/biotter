@@ -22,7 +22,7 @@ class Controller < Sinatra::Base
     profile = Profile.where(user_screen_name: params['user_name']).first
     if profile
       # screen_idを変更してもOKなようにしている
-      @profiles = profile.user.profiles
+      @profiles = profile.user.profiles.reverse
       erb :user_page
     else
       @not_found_user_name = params['user_name']
