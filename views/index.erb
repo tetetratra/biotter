@@ -21,43 +21,10 @@
   </head>
   <body>
 
-    <header>
-      <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-        <a class="navbar-brand h1" href="/">
-          <img src="biotter.png" alt="icon" class="mr-2 rounded" style="width: 80px; height: 80px;" data-holder-rendered="true">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <form id="search_form" class="form-inline mt-2 mt-md-0" onsubmit="button_click()">
-            <div class="input-group-prepend">
-              <span class="input-group-text">@</span>
-            </div>
-            <input id="user_screen_name" value="" class="form-control mr-sm-2" type="text" placeholder="user_name" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" href="#/">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+    <%= erb :'header' %>
+    <br><br><br><br><br>
 
-    <br><br><br><br>
-
-    <div class="my-3 p-3 bg-white rounded box-shadow">
-      <h6 class="border-bottom border-gray pb-2 mb-0">最近の更新</h6>
-      <% @all_profiles.each do |profile| %>
-        <div class="media text-muted pt-3">
-          <img src="<%= "images/" + profile.user_twitter_id.to_s + '/' + profile.user_profile_image_url %>" alt="icon" class="mr-2 rounded" style="width: 45px; height: 45px;" data-holder-rendered="true">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark"><%= profile.user_name %></strong>
-            <a href="/<%= profile.user_screen_name %>">
-              <span class="d-block">@<%= profile.user_screen_name %></span>
-            </a>
-            <%= profile.user_description.add_a_tag %>
-          </p>
-        </div>
-      <% end %>
-    </div>
+    <%= erb :'main_contents', locals: {profiles: @all_profiles, title: '最近の更新'} %>
 
     <footer class="bd-footer text-muted">
       <div class="container-fluid p-3 p-md-5">
