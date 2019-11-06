@@ -18,12 +18,14 @@ class Handler
       user_profile_image_url = follower[:profile_image_url].gsub('_normal', '_200x200').split('/')[-2..-1].join('_')
       user_description       = follower[:description]
                                .then do |description|
+                                 break nil if description.nil?
                                  url_master.inject(description) do |new_description, (short_url, full_url)|
                                    new_description.gsub(short_url, full_url)
                                  end
                                end
       user_url               = follower[:url]
                                .then do |url|
+                                 break nil if url.nil?
                                  url_master.inject(url) do |new_url, (short_url, full_url)|
                                    new_url.gsub(short_url, full_url)
                                  end
@@ -42,9 +44,9 @@ class Handler
 
   def select_updated_follower_profiles(follower_profiles)
     # "違い"とみなす項目
-    compare_target_colmn = %i[user_description user_screen_name user_name user_profile_image_url]
+    compare_target_colmn = %i[user_description user_screen_name user_name]
     selected_follower_profiles = follower_profiles.select do |follower_profile|
-      user = User.find_by(user_twitter_id: follower_profile[:user_twitter_id])
+      user = User.where(user_twitter_id: follower_profile[:user_twitter_id]).last
       user.nil? || user.profiles.first&.slice(*compare_target_colmn)&.symbolize_keys != follower_profile.slice(*compare_target_colmn)
     end
     selected_follower_profiles
@@ -56,7 +58,7 @@ class Handler
       user.profiles.create(follower_profile)
       Dir.mkdir("public/images/#{follower_profile[:user_twitter_id]}") if Dir.glob("public/images/#{follower_profile[:user_twitter_id]}").empty?
       File.open("public/images/#{follower_profile[:user_twitter_id]}/#{follower_profile[:user_profile_image_url]}", 'wb') do |file|
-        uri = URI.parse(follower_profile[:user_profile_image_url])
+        uri = URI.parse('https://pbs.twimg.com/profile_images/' + follower_profile[:user_twitter_id].to_s + '/' + follower_profile[:user_profile_image_url])
         request = Net::HTTP::Get.new(uri)
         request['Upgrade-Insecure-Requests'] = '1'
         request['Sec-Fetch-Mode'] = 'navigate'
@@ -74,10 +76,10 @@ class Handler
   def tweet_follower_profiles(follower_profiles)
     follower_profiles.each do |follower_profile|
       safe_description = follower_profile[:user_description].gsub(/@|#/, '*')
-      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}"\
+      tweet_str = ("#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}")[0..115]\
                   + "\nhttp://tetetratra.net/biotter/#{follower_profile[:user_screen_name]}"
       puts tweet_str
-      # @client.update(tweet_str)
+      #@client.update(tweet_str)
     end
   end
 end
