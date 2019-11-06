@@ -9,7 +9,7 @@
           <a href="/<%= profile.user_screen_name %>">
             <span class="d-block">@<%= profile.user_screen_name %></span>
           </a>
-          <%= profile.user_description.add_a_tag %>
+          <%= profile.user_description.to_s.add_a_tag %>
           <br>
           <%= profile.user_url.to_s.add_a_tag %>
         </p>
