@@ -15,7 +15,7 @@ class Handler
       user_twitter_id        = follower[:id]
       user_screen_name       = follower[:screen_name]
       user_name              = follower[:name]
-      user_profile_image_url = follower[:profile_image_url].gsub('_normal', '_200x200').split('/')[-2..-1].join('_')
+      user_profile_image_url = follower[:profile_image_url].gsub('_normal', '_200x200').split('/')[-2..-1].join('/')
       user_description       = follower[:description]
                                .then do |description|
                                  break nil if description.nil?
@@ -57,8 +57,8 @@ class Handler
       user = User.find_by(user_twitter_id: follower_profile[:user_twitter_id]) || User.create(user_twitter_id: follower_profile[:user_twitter_id])
       user.profiles.create(follower_profile)
       Dir.mkdir("public/images/#{follower_profile[:user_twitter_id]}") if Dir.glob("public/images/#{follower_profile[:user_twitter_id]}").empty?
-      File.open("public/images/#{follower_profile[:user_twitter_id]}/#{follower_profile[:user_profile_image_url]}", 'wb') do |file|
-        uri = URI.parse('https://pbs.twimg.com/profile_images/' + follower_profile[:user_twitter_id].to_s + '/' + follower_profile[:user_profile_image_url])
+      File.open("public/images/#{follower_profile[:user_twitter_id]}/#{follower_profile[:user_profile_image_url].gsub('/', '')}", 'wb') do |file|
+        uri = URI.parse('https://pbs.twimg.com/profile_images/' + follower_profile[:user_profile_image_url])
         request = Net::HTTP::Get.new(uri)
         request['Upgrade-Insecure-Requests'] = '1'
         request['Sec-Fetch-Mode'] = 'navigate'
@@ -76,10 +76,9 @@ class Handler
   def tweet_follower_profiles(follower_profiles)
     follower_profiles.each do |follower_profile|
       safe_description = follower_profile[:user_description].gsub(/@|#/, '*')
-      tweet_str = ("#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}")[0..115]\
+      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}"[0..115] \
                   + "\nhttp://tetetratra.net/biotter/#{follower_profile[:user_screen_name]}"
-      puts tweet_str
-      #@client.update(tweet_str)
+      # @client.update(tweet_str)
     end
   end
 end
