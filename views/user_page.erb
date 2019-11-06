@@ -2,54 +2,67 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title><%= @user.user_name %>さんのプロフィール履歴</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <title><%= @profiles.first.user_name %>さんのプロフィール履歴 - Biotter</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript">
       function button_click() {
-        var form = document.getElementById("search_form");
-        var uesr_name = document.getElementById("user_name_input");
-        form.action = "/biotter/" + uesr_name.value;
-        form.submit();
+        var form_element = document.getElementById("search_form");
+        var user_screen_name_element = document.getElementById("user_screen_name");
+        form_element.action = user_screen_name_element.value;
+        form_element.submit();
       }
     </script>
     <meta name="twitter:card" content="summary"/>
-    <meta property="og:url" content="http://tk2-223-21147.vs.sakura.ne.jp/<%= @user.user_name %>"/>
-    <meta property="og:title" content="<%= @user.user_name %>さんのプロフィール履歴"/>
-    <meta property="og:description" content="<%= h @user.profiles.last.profile %>"/>
-    <meta property="og:image" content="http://tk2-223-21147.vs.sakura.ne.jp/biotter.png"/>
+    <meta property="og:url" content="http://biotter.tetetratra.net/<%= @profiles.first.user_screen_name %>"/>
+    <meta property="og:title" content="Biotter"/>
+    <meta property="og:description" content="<%= @profiles.first.user_name %>さんのプロフィール履歴"/>
+    <meta property="og:image" content="http://biotter.tetetratra.net/biotter.png"/>
   </head>
   <body>
-    <h1>Biotter</h1>
-    <form id="search_form" action="/" method="get">
-      <input id="user_name_input" type="text" placeholder="id入れてね">
-      <input id="search_button" type="submit" value="検索" onclick="button_click();">
-    </form>
-    <br>
-    <h2><%= h @user.user_name %>
-      さんのプロフィール履歴</h2>
-    <br>
-    <table class="table">
-      <tr>
-        <th>アイコン</th>
-        <th>名前</th>
-        <th>プロフィール</th>
-        <th>更新日時</th>
-      </tr>
-      <% @user.profiles.sort_by{|p|p.created_at}.reverse.each do |profile| %>
-        <tr>
-          <td><img src="<%= h profile.icon_url %>" alt="icon" width="30" height="30"></td>
-          <td width="100"><%= h profile.name %></td>
-          <td width="800"><%= h profile.profile %></td>
-          <td><%= h profile.created_at.strftime('%Y/%m/%d %H:%M') %></td>
-        </tr>
-      <% end %>
-    </table>
-    <br>
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
-    <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <br>
-    <a href="/biotter" role="button">ホームへ</a>
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+    <header>
+      <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <a class="navbar-brand h1" href="/">
+          <img src="biotter.png" alt="icon" class="mr-2 rounded" style="width: 80px; height: 80px;" data-holder-rendered="true">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <form id="search_form" class="form-inline mt-2 mt-md-0" onsubmit="button_click()">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            <input id="user_screen_name" value="" class="form-control mr-sm-2" type="text" placeholder="user_name" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" href="#/">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+
+    <br><br><br><br>
+
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0"><%= @profiles.first.user_name %>さんのプロフィール履歴</h6>
+        <% @profiles.each do |profile| %>
+        <div class="media text-muted pt-3">
+          <img src="<%= "images/" + profile.user_twitter_id.to_s + '/' + profile.user_profile_image_url %>" alt="icon" class="mr-2 rounded" style="width: 45px; height: 45px;" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark"><%= profile.user_name %></strong>
+            <a href="/<%= profile.user_screen_name %>">
+              <span class="d-block">@<%= profile.user_screen_name %></span>
+            </a>
+            <%= profile.user_description %>
+          </p>
+        </div>
+        <% end %>
+      </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

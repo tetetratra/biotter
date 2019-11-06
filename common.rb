@@ -14,3 +14,13 @@ require_relative './handler.rb'
 
 opt = OptionParser.new
 opt.parse(ARGV)
+
+class String
+  def add_a_tag
+    new_str = self
+    URI.extract(self, ['http']).each do |url|
+      new_str = new_str.gsub(url, %(<a href="#{url}">#{url}</a>))
+    end
+    new_str
+  end
+end
