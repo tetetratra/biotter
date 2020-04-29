@@ -18,6 +18,6 @@ BIOTTER_ACCESS_TOKEN_SECRET
 ## cron設定
 
 ```
-0 * * * * cd ~/biotter; /bin/bash -l -c 'bundle exec ruby exec.rb'
+0,10,20,30,40,50 * * * * cd ~/biotter; /bin/bash -l -c 'bundle exec ruby exec.rb'
 ```
 
