@@ -19,10 +19,9 @@ class Controller < Sinatra::Base
   end
 
   get '/:user_name' do
-    profile = Profile.where(user_screen_name: params['user_name']).first
-    if profile
-      # screen_idを変更してもOKなようにしている
-      @profiles = profile.user.profiles.reverse
+    pre_profiles = Profile.where(user_screen_name: params['user_name'])
+    if pre_profiles.empty?.!
+      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by { |pro| pro.created_at }
       erb :user_page
     else
       @not_found_user_name = params['user_name']
