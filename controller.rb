@@ -14,15 +14,7 @@ class Controller < Sinatra::Base
   end
 
   get '/' do
-    @all_profiles = if params[:page]&.empty?
-                      if params.key?(:all)
-                        Profile.all.order(created_at: 'DESC').page(1).per(15)
-                      else
-                        Profile.all.order(created_at: 'DESC')
-                      end
-                    else
-                      Profile.all.order(created_at: 'DESC').page(params[:page]).per(15)
-                    end
+    @all_profiles = Profile.all.order(created_at: 'DESC')
     erb :index
   end
 

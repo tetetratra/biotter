@@ -5,7 +5,6 @@ Bundler.require
 require 'active_record'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'kaminari'
 require 'net/http'
 require 'uri'
 require 'open-uri'
