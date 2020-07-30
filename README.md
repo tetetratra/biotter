@@ -21,6 +21,3 @@ BIOTTER_ACCESS_TOKEN_SECRET
 0,10,20,30,40,50 * * * * cd ~/biotter; /bin/bash -l -c 'bundle exec ruby exec.rb'
 ```
 
-## 注意!!
-`/public/images`に画像を置いているから、作り直すときは注意!
-DBに保存するようにいつか直す
