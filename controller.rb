@@ -21,7 +21,7 @@ class Controller < Sinatra::Base
   get '/:user_name' do
     pre_profiles = Profile.where(user_screen_name: params['user_name'])
     if pre_profiles.empty?.!
-      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by { |pro| pro.created_at }.uniq
+      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by { |pro| pro.created_at }.reverse.uniq
       erb :user_page
     else
       @not_found_user_name = params['user_name']
