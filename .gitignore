@@ -8,3 +8,4 @@ tmp/*
 cacert.pem
 public/images/*
 !public/images/.gitkeep
+*.log
