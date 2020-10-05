@@ -89,6 +89,8 @@ class Handler
     request['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
     req_options = { use_ssl: uri.scheme == 'https' }
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request) }
+    return nil unless Net::HTTPSuccess === response.code
+
     response.body
   end
 end
