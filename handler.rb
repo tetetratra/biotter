@@ -39,7 +39,7 @@ class Handler
 
   def select_updated_follower_profiles(follower_profiles)
     # これらのカラムに変更があったときに更新とみなす
-    compare_target_colmn = %i[user_description user_screen_name user_name] # user_profile_image user_location user_profile_banner
+    compare_target_colmn = %i[user_description user_screen_name user_name user_profile_image user_profile_banner user_location]
     selected_follower_profiles = follower_profiles.select do |follower_profile|
       user = User.where(user_twitter_id: follower_profile[:user_twitter_id]).last
       user.nil? || user.profiles.last&.slice(*compare_target_colmn)&.symbolize_keys != follower_profile.slice(*compare_target_colmn)
