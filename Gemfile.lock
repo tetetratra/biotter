@@ -118,6 +118,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  activesupport
   awesome_print
   mysql2
   nokogiri
@@ -131,4 +132,4 @@ DEPENDENCIES
   twitter
 
 BUNDLED WITH
-   2.0.1
+   2.1.4
