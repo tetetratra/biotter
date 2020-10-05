@@ -42,7 +42,7 @@ class Handler
     compare_target_colmn = %i[user_description user_screen_name user_name user_profile_image user_profile_banner user_location]
     selected_follower_profiles = follower_profiles.select do |follower_profile|
       user = User.where(user_twitter_id: follower_profile[:user_twitter_id]).last
-      user.nil? || user.profiles.last&.slice(*compare_target_colmn)&.symbolize_keys != follower_profile.slice(*compare_target_colmn)
+      user.nil? || user.profiles.order('created_at DESC').first.slice(*compare_target_colmn).symbolize_keys != follower_profile.slice(*compare_target_colmn)
     end
     selected_follower_profiles
   end
@@ -58,7 +58,8 @@ class Handler
   def tweet_follower_profiles(follower_profiles)
     follower_profiles.each do |follower_profile|
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
-      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
+      t = follower_profile.created_at.strftime('%H:%M')
+      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました! #{t}\n #{safe_description}".truncate(100) \
        + "\nhttp://biotter.tetetratra.net/#{follower_profile[:user_screen_name]}"
       @client.update(tweet_str)
     end
@@ -67,7 +68,8 @@ class Handler
   private
 
   def fetch_profile_image(url)
-    return nil if url.nil?
+    default_icon = File.open(File.expand_path('public/default_icon.png', __dir__)).read
+    return default_icon if url.nil?
 
     uri = URI.parse(url)
     request = Net::HTTP::Get.new(uri)
@@ -76,7 +78,10 @@ class Handler
     request['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
     req_options = { use_ssl: uri.scheme == 'https' }
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request) }
-    response.body
+    body = response.body
+    return default_icon if body.include?('404 - Not Found')
+
+    body
   end
 
   def fetch_profile_banner(url)
@@ -89,8 +94,9 @@ class Handler
     request['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
     req_options = { use_ssl: uri.scheme == 'https' }
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) { |http| http.request(request) }
-    return nil unless Net::HTTPSuccess === response.code
+    body = response.body
+    return nil if body.include?('404 - Not Found')
 
-    response.body
+    body
   end
 end
