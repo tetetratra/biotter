@@ -3,22 +3,22 @@
     <% first_profile = locals[:profiles].first %>
     <h6 class="border-bottom border-gray pb-2 mb-0"><%= locals[:title] %></h6>
     <% locals[:profiles].each do |profile| %>
-      <div class="media text-muted pt-3" style="margin: 0 auto; transition: transform .2s; position: relative;">
+      <div class="media text-muted pt-3 row_content" style="position: relative;">
         <% if img = profile.user_profile_image %>
           <a href="/<%= profile.user_screen_name %>">
-            <img alt="icon" class="mr-2 rounded" style="width: 50px; height: 50px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(img) %>" />
+            <img alt="icon" class="mr-2 rounded icon-image" style="width: 55px; height: 55px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(img) %>" />
           </a>
         <% end %>
         <% if (banner = profile.user_profile_banner) && banner.empty?.! %>
-          <div class="banner-image" style="position:absolute; top:15px; left:150px;">
-            <img alt="icon" class="mr-2 rounded" style="width: 90px; height: 30px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(banner) %>" />
+          <div style="position:absolute; top:15px; right:130px;">
+            <img alt="icon" class="mr-2 rounded banner-image" style="width: 100px; height: 33px;" data-holder-rendered="true" src="data:image/png;base64,<%= Base64.strict_encode64(banner) %>" />
           </div>
         <% end %>
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
           <strong class="d-block text-gray-dark"><%= profile.user_name %></strong>
-          <a href="/<%= profile.user_screen_name %>">
-            <span class="d-block">@<%= profile.user_screen_name %></span>
-          </a>
+          <span class="d-block">
+            <a href="https://twitter.com/<%= profile.user_screen_name %>">@<%= profile.user_screen_name %></a>
+          </span>
           <%= profile.user_description.to_s.add_a_tag %>
           <br>
           <%= profile.user_url.to_s.add_a_tag %>&nbsp;&nbsp;
@@ -35,9 +35,23 @@
   <br>
 </main>
 
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('div.row_content').forEach(row => {
+    row.addEventListener('click', () => {
+      location.href = row.querySelector('a').href;
+    })
+  })
+})
+</script>
+
 <style type="text/css">
-div.banner-image > img:hover {
+img.banner-image:hover, img.icon-image:hover {
   transform: scale(2);
   transition-duration: 0.5s;
+}
+div.row_content:hover {
+  background: #EEEEEE;
+  cursor: pointer;
 }
 </style>
