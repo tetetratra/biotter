@@ -24,7 +24,7 @@
     <%= erb :'header' %>
     <br><br><br><br><br>
 
-    <%= erb :'main_contents', locals: {profiles: @all_profiles.take(15), title: '最近の更新'} %>
+    <%= erb :'main_contents', locals: {profiles: @all_profiles, title: '最近の更新'} %>
 
     <footer class="bd-footer text-muted">
       <div class="container-fluid p-3 p-md-5">

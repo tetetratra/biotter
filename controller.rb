@@ -14,7 +14,7 @@ class Controller < Sinatra::Base
   end
 
   get '/' do
-    @all_profiles = Profile.all.order(created_at: 'DESC')
+    @all_profiles = Profile.all.order(created_at: 'DESC').limit(20)
     erb :index
   end
 
