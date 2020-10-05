@@ -19,24 +19,14 @@ class Controller < Sinatra::Base
   end
 
   get '/:user_name' do
-    pre_profiles = Profile.where(user_screen_name: params['user_name'])
-    if pre_profiles.empty?.!
-      # スクリーンネームが変わった人のために、(子->親->子)のように辿っている
-      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by(&:created_at).reverse.uniq
+    users = Profile.select(:user_id).distinct.where(user_screen_name: params['user_name']).map(&:user) # (スクリーンネーム同じ & 別アカウント)用
+    if users.empty?.! # (スクリーンネーム別 & 同一アカウント)用
+      # スクリーンネームが変わった人のため
+      @profiles = users.flat_map(&:profiles).sort_by(&:created_at).reverse
       erb :user_page
     else
       @not_found_user_name = params['user_name']
       erb :not_found_user_page
-    end
-  end
-
-  get '/profile_image/:profile_id' do
-    image = Profile.find_by(id: params['profile_id']).user_profile_image
-    return nil if image.nil?
-
-    Tempfile.open do |file|
-      file.write(image)
-      send_file(file.path)
     end
   end
 
