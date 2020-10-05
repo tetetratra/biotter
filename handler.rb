@@ -14,11 +14,9 @@ class Handler
       user_twitter_id         = follower[:id]
       user_screen_name        = follower[:screen_name]
       user_name               = follower[:name]
-      user_profile_image_url  = follower[:profile_image_url].gsub('_normal', '_200x200').split('/')[-2..-1].join('/')
       user_location           = follower[:location]
-      user_profile_banner_url = follower[:profile_banner_url]
-      user_profile_image      = fetch_profile_image(user_profile_image_url)
-      user_profile_banner     = fetch_profile_banner(user_profile_banner_url)
+      user_profile_image      = fetch_profile_image(follower[:profile_image_url].gsub('_normal', '_200x200'))
+      user_profile_banner     = fetch_profile_banner(follower[:profile_banner_url])
       user_description        = follower[:description].then do |description|
         description.nil? ? nil : url_master.inject(description) { |new_description, (short_url, full_url)| new_description.gsub(short_url, full_url) }
       end
@@ -29,12 +27,10 @@ class Handler
         user_twitter_id: user_twitter_id,
         user_screen_name: user_screen_name,
         user_name: user_name,
-        user_profile_image_url: user_profile_image_url,
         user_profile_image: user_profile_image,
         user_description: user_description,
         user_url: user_url,
         user_location: user_location,
-        user_profile_banner_url: user_profile_banner_url,
         user_profile_banner: user_profile_banner
       }
     end
@@ -70,8 +66,10 @@ class Handler
 
   private
 
-  def fetch_profile_image(user_profile_image_url)
-    uri = URI.parse('https://pbs.twimg.com/profile_images/' + user_profile_image_url)
+  def fetch_profile_image(url)
+    return nil if url.nil?
+
+    uri = URI.parse(url)
     request = Net::HTTP::Get.new(uri)
     request['Upgrade-Insecure-Requests'] = '1'
     request['Sec-Fetch-Mode'] = 'navigate'
@@ -81,8 +79,10 @@ class Handler
     response.body
   end
 
-  def fetch_profile_banner(user_profile_banner_url)
-    uri = URI.parse('https://pbs.twimg.com/profile_banners/' + user_profile_banner_url + '/1500x500')
+  def fetch_profile_banner(url)
+    return nil if url.nil?
+
+    uri = URI.parse(url)
     request = Net::HTTP::Get.new(uri)
     request['Upgrade-Insecure-Requests'] = '1'
     request['Sec-Fetch-Mode'] = 'navigate'
