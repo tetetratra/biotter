@@ -15,7 +15,8 @@ ActiveRecord::Base.establish_connection(
   password: db_password,
   charset: 'utf8mb4',
   encoding: 'utf8mb4',
-  collation: 'utf8mb4_general_ci'
+  collation: 'utf8mb4_general_ci',
+  pool: 20
 )
 
 Time.zone_default = Time.find_zone! 'Tokyo'
