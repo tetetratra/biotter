@@ -21,11 +21,22 @@ class Controller < Sinatra::Base
   get '/:user_name' do
     pre_profiles = Profile.where(user_screen_name: params['user_name'])
     if pre_profiles.empty?.!
-      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by { |pro| pro.created_at }.reverse.uniq
+      # スクリーンネームが変わった人のために、(子->親->子)のように辿っている
+      @profiles = pre_profiles.flat_map { |pro| pro.user.profiles }.sort_by(&:created_at).reverse.uniq
       erb :user_page
     else
       @not_found_user_name = params['user_name']
       erb :not_found_user_page
+    end
+  end
+
+  get '/profile_image/:profile_id' do
+    image = Profile.find_by(id: params['profile_id']).user_profile_image
+    return nil if image.nil?
+
+    Tempfile.open do |file|
+      file.write(image)
+      send_file(file.path)
     end
   end
 

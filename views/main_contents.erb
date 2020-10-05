@@ -3,7 +3,7 @@
     <h6 class="border-bottom border-gray pb-2 mb-0"><%= locals[:title] %></h6>
     <% locals[:profiles].each do |profile| %>
       <div class="media text-muted pt-3">
-        <img src="<%= "images/" + profile.user_twitter_id.to_s + '/' + profile.user_profile_image_url.gsub('/', '') %>" alt="icon" class="mr-2 rounded" style="width: 45px; height: 45px;" data-holder-rendered="true">
+        <img src="/profile_image/<%= profile.id %>" alt="icon" class="mr-2 rounded" style="width: 45px; height: 45px;" data-holder-rendered="true">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
           <strong class="d-block text-gray-dark"><%= profile.user_name %></strong>
           <a href="/<%= profile.user_screen_name %>">

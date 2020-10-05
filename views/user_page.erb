@@ -17,8 +17,7 @@
     <meta property="og:url" content="http://biotter.tetetratra.net/<%= @profiles.first.user_screen_name %>"/>
     <meta property="og:title" content="Biotter"/>
     <meta property="og:description" content="<%= @profiles.first.user_name %>さんのプロフィール履歴"/>
-
-    <meta property="og:image" content="<%= "http://biotter.tetetratra.net/images/" + @profiles.first.user_twitter_id.to_s + '/' + @profiles.first.user_profile_image_url.gsub('/', '') %>"/>
+    <meta property="og:image" content="http://biotter.tetetratra.net/profile_image/<%= @profiles.first.id %>"/>
   </head>
   <body>
 
