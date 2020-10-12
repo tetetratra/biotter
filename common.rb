@@ -7,12 +7,13 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'kaminari'
+require 'kaminari/sinatra'
 require 'net/http'
 require 'uri'
 require 'open-uri'
 require 'optparse'
 require_relative './database.rb'
-require_relative './handler.rb'
 
 opt = OptionParser.new
 opt.parse(ARGV)

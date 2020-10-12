@@ -3,6 +3,8 @@ require_relative './common.rb'
 configure { set :server, :puma }
 
 class Controller < Sinatra::Base
+  helpers Kaminari::Helpers::SinatraHelpers
+
   def initialize
     super
   end
@@ -14,7 +16,7 @@ class Controller < Sinatra::Base
   end
 
   get '/' do
-    @all_profiles = Profile.all.order(created_at: 'DESC').limit(20)
+    @all_profiles = Profile.all.order(created_at: 'DESC').page(params['page']).per(20)
     erb :index
   end
 
@@ -22,7 +24,8 @@ class Controller < Sinatra::Base
     users = Profile.select(:user_id).distinct.where(user_screen_name: params['user_name']).map(&:user) # (スクリーンネーム同じ & 別アカウント)用
     if users.empty?.! # (スクリーンネーム別 & 同一アカウント)用
       # スクリーンネームが変わった人のため
-      @profiles = users.flat_map(&:profiles).sort_by(&:created_at).reverse
+      profiles_all = users.flat_map(&:profiles).sort_by(&:created_at).reverse
+      @profiles = Kaminari.paginate_array(profiles_all).page(params['page']).per(20)
       erb :user_page
     else
       @not_found_user_name = params['user_name']

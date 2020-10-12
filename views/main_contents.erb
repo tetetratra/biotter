@@ -30,6 +30,9 @@
       </div>
     <% end %>
   </div>
+  <%= link_to_prev_page(locals[:profiles], '前') %>
+  <%= link_to_next_page(locals[:profiles], '次') %>
+  <br>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
   <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <br>
@@ -53,5 +56,14 @@ img.banner-image:hover, img.icon-image:hover {
 div.row_content:hover {
   background: #EEEEEE;
   cursor: pointer;
+}
+a[rel=next], a[rel=prev] {
+  display: inline-block;
+  padding: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #DDDDFF;
 }
 </style>
