@@ -19,10 +19,10 @@
           <span class="d-block">
             <a href="https://twitter.com/<%= profile.user_screen_name %>">@<%= profile.user_screen_name %></a>
           </span>
-          <%= profile.user_description.to_s.add_a_tag %>
+          <%== profile.user_description.to_s.add_a_tag %>
           <br>
-          <%= profile.user_url.to_s.add_a_tag %>&nbsp;&nbsp;
-          <%= profile.user_location.to_s.add_a_tag %>
+          <%== profile.user_url.to_s.add_a_tag %>&nbsp;&nbsp;
+          <%== profile.user_location.to_s.add_a_tag %>
         </p>
         <p>
           <%= profile.created_at.strftime('%Y-%-m-%-d %H:%M') %>
@@ -30,8 +30,8 @@
       </div>
     <% end %>
   </div>
-  <%= link_to_prev_page(locals[:profiles], '前') %>
-  <%= link_to_next_page(locals[:profiles], '次') %>
+  <%= link_to_prev_page(locals[:profiles], '前へ') %>
+  <%= link_to_next_page(locals[:profiles], '次へ') %>
   <br>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
   <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
