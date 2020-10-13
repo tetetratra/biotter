@@ -34,6 +34,7 @@ class Exec
         user_profile_banner: user_profile_banner
       }
     rescue => e
+      p e.full_message(highlight: false)
       next nil
     end.compact
 
@@ -50,16 +51,13 @@ class Exec
       user.profiles.create(follower_profile)
 
       safe_description = follower_profile[:user_description].gsub(/@|#|\*/, '●')
-      t = follower_profile.created_at.strftime('%H:%M')
-      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました! #{t}\n #{safe_description}".truncate(100) \
+      tweet_str = "#{follower_profile[:user_name]}さん(#{follower_profile[:user_screen_name]})のプロフィールが更新されました!\n #{safe_description}".truncate(100) \
        + "\nhttp://biotter.tetetratra.net/#{follower_profile[:user_screen_name]}"
       client.update(tweet_str)
     end
   end
 
-  private
-
-  def fetch_profile_image(url)
+  def self.fetch_profile_image(url)
     default_icon = File.open(File.expand_path('public/default_icon.png', __dir__)).read
     return default_icon if url.nil?
 
@@ -76,7 +74,7 @@ class Exec
     body
   end
 
-  def fetch_profile_banner(url)
+  def self.fetch_profile_banner(url)
     return nil if url.nil?
 
     uri = URI.parse(url)
