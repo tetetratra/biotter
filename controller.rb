@@ -3,7 +3,8 @@ require_relative './common.rb'
 configure { set :server, :puma }
 
 class Controller < Sinatra::Base
-  helpers Kaminari::Helpers::SinatraHelpers
+  # helpers Kaminari::Helpers::SinatraHelpers
+  register Kaminari::Helpers::SinatraHelpers
 
   def initialize
     super
