@@ -19,10 +19,20 @@
           <span class="d-block">
             <a href="https://twitter.com/<%= profile.user_screen_name %>">@<%= profile.user_screen_name %></a>
           </span>
-          <%== profile.user_description.to_s.add_a_tag %>
+          <%= profile.user_description.to_s %>
           <br>
-          <%== profile.user_url.to_s.add_a_tag %>&nbsp;&nbsp;
-          <%== profile.user_location.to_s.add_a_tag %>
+          <% u = profile.user_url.to_s %>
+          <% if u.match?(/http/) %>
+            <a href="<%= u %>"><%= u %>&nbsp;&nbsp;</a>
+          <% else %>
+            <%= u %>
+          <% end %>
+          <% l= profile.user_location.to_s %>
+          <% if l.to_s.match?(/http/) %>
+            <a href="<%= l %>"><%= l %>&nbsp;&nbsp;</a>
+          <% else %>
+            <%= l %>
+          <% end %>
         </p>
         <p>
           <%= profile.created_at.strftime('%Y-%-m-%-d %H:%M') %>
