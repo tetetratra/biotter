@@ -172,6 +172,7 @@ DEPENDENCIES
   pry-byebug
   puma
   rspec
+  rubyzip
   selenium-webdriver
   sinatra
   sinatra-contrib
