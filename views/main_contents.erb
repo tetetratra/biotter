@@ -43,7 +43,10 @@
   <%= link_to_prev_page(locals[:profiles], '前へ') %>
   <%= link_to_next_page(locals[:profiles], '次へ') %>
   <br>
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <% if @profiles %>
+    <div><a class='download_button' href="/<%= @profiles.first.user_screen_name %>/download">エクスポート</a></div>
+  <% end %>
+  <div class='twitter_share'><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a></div>
   <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <br>
 </main>
@@ -59,6 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <style type="text/css">
+div.twitter_share {
+  margin: 8px;
+}
+a.download_button {
+  background: #DDFFEE;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 5px;
+}
+
 div.row_content:hover {
   background: #EEEEEE;
   cursor: pointer;
