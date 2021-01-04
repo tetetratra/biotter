@@ -52,11 +52,10 @@ class Controller < Sinatra::Base
       profiles_all = users.flat_map(&:profiles).sort_by(&:created_at).reverse
 
       zip_file = Tempfile.open
-      bom = "\uFEFF"
-      zip_file.write(bom)
       Zip::File.open(zip_file.path, Zip::File::CREATE) do |zipfile|
         csv_header = %i[id user_screen_name user_name user_description user_location user_url created_at]
         Tempfile.open do |file|
+          file.write("\uFEFF") # bom
           CSV.open(file.path, 'wb') do |csv|
             csv << csv_header
             profiles_all.each do |profile|
