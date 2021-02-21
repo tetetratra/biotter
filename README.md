@@ -1,3 +1,9 @@
+構成を一新しました。このリポジトリは旧Biotterのコードとなります。(2021/02/21)
+
+新リポジトリ: https://github.com/tetetratra/biotter-rails
+
+---
+
 # Biotter
 
 ツイッターのプロフィール欄の編集履歴を記録します
