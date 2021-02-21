@@ -17,6 +17,36 @@ class Controller < Sinatra::Base
     end
   end
 
+  get '/profile_image/:id' do
+    if profile = Profile.find_by(id: params['id'])
+      if profile.user_profile_image
+        Tempfile.open do |file|
+          file.write(profile.user_profile_image)
+          send_file(file.path, filename: "user_profile_image_#{params['id']}.png")
+        end
+      else
+        [400, 'no image']
+      end
+    else
+        [400, 'no user']
+    end
+  end
+
+  get '/profile_banner/:id' do
+    if profile = Profile.find_by(id: params['id'])
+      if profile.user_profile_banner
+        Tempfile.open do |file|
+          file.write(profile.user_profile_banner)
+          send_file(file.path, filename: "user_profile_banner_#{params['id']}.png")
+        end
+      else
+        halt 410
+      end
+    else
+      halt 410
+    end
+  end
+
   get '/' do
     @all_profiles = Profile.all.order(created_at: 'DESC').page(params['page']).per(20)
     erb :index
